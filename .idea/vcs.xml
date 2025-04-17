@@ -3,6 +3,5 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Gateway_service_registry" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Gateway_service_registry/serviceregistry" vcs="Git" />
   </component>
 </project>

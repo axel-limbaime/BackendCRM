@@ -1,0 +1,15 @@
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: eureka-server
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  server:
+    enable-self-preservation: false
+
+spring:
+  application:
+    name: eureka-server

@@ -1,0 +1,105 @@
+spring:
+ cloud:
+   gateway:
+
+     globalcors:
+       cors-configurations:
+         '[/**]':
+           allowedOrigins: ["http://localhost:4200","http://localhost:4300"]
+           allowedMethods:
+             - GET
+             - POST
+             - PUT
+             - DELETE
+             - OPTIONS
+           allowedHeaders: "*"
+           allowCredentials: true
+
+     routes:
+       - id: user-service
+         uri: http://localhost:8005
+         predicates:
+           - Path=/auth/**
+         filters:
+#           - Name: AuthenticationFilter
+
+       - id: user-service-api-docs
+         uri: http://localhost:8005
+         predicates:
+           - Path=/auth/v3/api-docs/**
+         filters:
+#           - Name: AuthenticationFilter
+
+       - id: user-service-openapi
+         uri: http://localhost:8005
+         predicates:
+           - Path=/auth/swagger-ui.html
+         filters:
+#           - Name: AuthenticationFilter
+
+
+
+       - id: student-lifecycle-service
+         uri: http://localhost:8087
+         predicates:
+           - Path=/lifecycle/**
+         filters:
+#           - Name: AuthenticationFilter
+
+       - id: student-service-api-docs
+         uri: http://localhost:8087
+         predicates:
+           - Path=/lifecycle/v3/api-docs/**
+         filters:
+#           - Name: AuthenticationFilter
+
+       - id: student-service-openapi
+         uri: http://localhost:8087
+         predicates:
+           - Path=/lifecycle/swagger-ui.html
+         filters:
+#           - Name: AuthenticationFilter
+
+
+       - id: task-service
+         uri: http://localhost:8082
+         predicates:
+           - Path=/Task/**
+         filters:
+#           - Name: AuthenticationFilter
+
+       - id: task-service-api-docs
+         uri: http://localhost:8082
+         predicates:
+           - Path=/Task/v3/api-docs/**
+         filters:
+#           - Name: AuthenticationFilter
+
+       - id: task-service-openapi
+         uri: http://localhost:8082
+         predicates:
+           - Path=/Task/swagger-ui.html
+         filters:
+#           - Name: AuthenticationFilter
+
+
+       - id: openapi
+         uri: http://localhost:8080
+         predicates:
+           - Path=/v3/api-docs/**
+         filters:
+#           - Name: AuthenticationFilter
+
+
+
+
+
+
+ application:
+   name: GATEWAY
+
+eureka:
+  client:
+    service-url:
+#      defaultZone : http://localhost:8761/eureka/
+      defaultZone : ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}

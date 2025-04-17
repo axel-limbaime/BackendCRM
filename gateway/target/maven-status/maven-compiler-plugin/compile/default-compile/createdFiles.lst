@@ -1,0 +1,6 @@
+gp2\CRM\User\config\AppConfig.class
+gp2\CRM\User\GatewayApplication.class
+gp2\CRM\User\filter\AuthenticationFilter$Config.class
+gp2\CRM\User\filter\RouteValidator.class
+gp2\CRM\User\filter\AuthenticationFilter.class
+gp2\CRM\User\util\JwtUtil.class

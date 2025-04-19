@@ -7,7 +7,6 @@ HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-/src/main/resources
 
 ### STS ###
 .apt_generated

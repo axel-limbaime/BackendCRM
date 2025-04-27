@@ -1,5 +1,6 @@
 package gp2.StudentLifeCycle.StudentLifecylce.repository;
 
+import gp2.StudentLifeCycle.StudentLifecylce.models.Academic;
 import gp2.StudentLifeCycle.StudentLifecylce.models.Application;
 import gp2.StudentLifeCycle.StudentLifecylce.models.Candidate;
 import gp2.StudentLifeCycle.StudentLifecylce.models.Document;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DocumentRepository extends CrudRepository<Document, Long> {
-
+    Optional<Document> findDocumentsByCandidateId(Long id);
 
    /* @Query("SELECT d FROM Document d WHERE d.application.id = :applicationId")
     List<Document> findAllByApplicationId(@Param("applicationId")Long applicationId);

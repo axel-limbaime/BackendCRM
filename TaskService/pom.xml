@@ -79,12 +79,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
-		<!-- KEEP ONLY ONE COPY OF THIS DEPENDENCY -->
-		<dependency>
-			<groupId>gp2.StudentLifeCycle</groupId>
-			<artifactId>StudentLifecylce</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

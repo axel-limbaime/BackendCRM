@@ -4,7 +4,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: ["http://localhost:4200", "http://localhost:4300"]
+            allowedOriginPatterns: ["*"]
             allowedMethods:
               - GET
               - POST
@@ -13,6 +13,7 @@ spring:
               - OPTIONS
             allowedHeaders: "*"
             allowCredentials: true
+            maxAge: 3600
 
       routes:
         - id: user-service

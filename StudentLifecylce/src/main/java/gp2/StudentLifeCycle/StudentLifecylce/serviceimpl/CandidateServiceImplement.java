@@ -91,9 +91,9 @@ public class CandidateServiceImplement {
 
                     //  FIX: Fetch Level from repository before setting it
                     if (updatedCandidate.getLevel() != null && updatedCandidate.getLevel().getId() != null) {
-                        Level level = levelRepository.findById(updatedCandidate.getLevel().getId())
-                                .orElseThrow(() -> new RuntimeException("Level not found"));
-                        existingCandidate.setLevel(level);
+//                        Level level = levelRepository.findById(updatedCandidate.getLevel().getId())
+//                                .orElseThrow(() -> new RuntimeException("Level not found"));
+                        existingCandidate.setLevel(updatedCandidate.getLevel());
                     }
 
                     // Handle student creation

@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class CandidateServiceImplement {
@@ -33,6 +36,8 @@ public class CandidateServiceImplement {
 
     private ApplicationServiceImplement appService;
     private ApplicationRepository applicationRepository;
+
+    private static final AtomicInteger counter = new AtomicInteger(1); // Auto-increment number
 
 
     public CandidateServiceImplement(CandidateRepository candidateRepository, StudentRepository studentRepository, DocumentServiceImplement docService, ApplicationServiceImplement appService, ApplicationRepository applicationRepository) {
@@ -74,6 +79,8 @@ public class CandidateServiceImplement {
     }
 
     public Candidate updateCandidate(Long id, CandidateDto updatedCandidate) {
+        Optional<Candidate> candio = candidateRepository.findById(id);
+
         return candidateRepository.findCandidateById(id)
                 .map(existingCandidate -> {
                     existingCandidate.setName(updatedCandidate.getName());
@@ -88,6 +95,7 @@ public class CandidateServiceImplement {
                     existingCandidate.setOptions(updatedCandidate.getOptions());
                     existingCandidate.setCni(updatedCandidate.getCni());
                     existingCandidate.setSex(updatedCandidate.getSex());
+                    existingCandidate.setMatricule(candio.get().getMatricule());
 
                     //  FIX: Fetch Level from repository before setting it
                     if (updatedCandidate.getLevel() != null && updatedCandidate.getLevel().getId() != null) {
@@ -160,6 +168,9 @@ public class CandidateServiceImplement {
         candidate.setSex(candidateDto.getSex());
         candidate.setStatus(Candidate.Status.NEW);
 
+        // Generate matricule based on the level
+        candidate.setMatricule(generateCandidateId(candidate.getLevel()));
+
         //smsServiceImplement.notifyCandidate(candidateDto);
         emailServiceImplement.sendSimpleMail(candidateDto);
 
@@ -188,6 +199,24 @@ public class CandidateServiceImplement {
 
 
         return candidateRepository.save(candidate);
+    }
+
+    private String generateCandidateId(Level level) {
+        int year = Year.now().getValue(); // Get current year
+        String classCode = getClassCode(level.getName()); // Extract class code from level name
+        int levelYear = level.getYear(); // Extract level year
+        int candidateNumber = counter.getAndIncrement(); // Auto-incrementing number
+
+        return String.format("%d%s%d%03d", year, classCode, levelYear, candidateNumber);
+    }
+
+    private String getClassCode(String levelName) {
+        return switch (levelName.toUpperCase()) {
+            case "BACHELOR" -> "LIC";
+            case "MASTER" -> "MAS";
+            case "ENGINEERING" -> "ING";
+            default -> "UNK"; // Unknown level
+        };
     }
 
 

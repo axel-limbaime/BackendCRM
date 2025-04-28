@@ -10,6 +10,16 @@ public class Document {
     private Long id;
     private String name;
 
+    private Long candidateId;
+
+    public Long getCandidateId() {
+        return candidateId;
+    }
+
+    public void setCandidateId(Long candidateId) {
+        this.candidateId = candidateId;
+    }
+
     @Enumerated(EnumType.STRING)
     private Doctype doctype;
     @Lob

@@ -9,13 +9,14 @@ services:
       - app-network
 
   mysql:
-    image: mysql:8
+    image: mysql:8.0
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD : 1234
-      MYSQL_PASSWORD: 1234
-    ports:
-      - "3306:3306"
+      - MYSQL_ROOT_PASSWORD = 1234
+      - MYSQL_PASSWORD= 1234
+      - MYSQL_DATABASE=mysql
+#    ports:
+#      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
@@ -86,6 +87,19 @@ services:
       - service-registry
     networks:
       - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports: [ "8081:81" ]
+    environment:
+      - PMA_ARBITRARY = 1
+      - PMA_ABSOLUTE_URI = http://localhost:8081
+      - PMA_HOST = mysql
+      - PMA_PORT = 3306
+    restart: always
+    depends_on:
+      - mysql
+    networks: [ app-network ]
 
 networks:
   app-network:

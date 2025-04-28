@@ -5,6 +5,7 @@ import gp2.StudentLifeCycle.StudentLifecylce.serviceimpl.DocumentServiceImplemen
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,20 @@ public class DocumentController {
             return ResponseEntity.ok("Document uploaded successfully with ID: " + document.getId());
         } catch (IOException e) {
             return ResponseEntity.internalServerError().body("Failed to upload document: " + e.getMessage());
+        }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Document> getDocumentById(@PathVariable Long id) {
+        Document document = documentService.getDocumentById(id);
+        return ResponseEntity.ok(document);
+    }
+    @GetMapping("/candidate/{id}")
+    public ResponseEntity<Document> getDocumentsByCandidateId(@PathVariable Long id) {
+        Document documents = documentService.getDocumentsByCandidateId(id).orElse(null);
+        if (documents != null) {
+            return ResponseEntity.ok(documents);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }
